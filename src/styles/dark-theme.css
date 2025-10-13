@@ -1,0 +1,138 @@
+:root {
+  --bg: #0f1216;
+  --bg-elev: #151a21;
+  --bg-soft: #1a2029;
+  --text: #e6edf3;
+  --muted: #9aa7b4;
+  --border: #2a3440;
+
+  --grid-line: #2f3b4a;
+  --cell-bg: #161c24;
+  --cell-prefilled: #212734;
+  --cell-related: #0f253a;
+  --cell-selected: #0b3a68;
+
+  --primary: #3b82f6;
+  --primary-700: #1d4ed8;
+  --success-600: #16a34a;
+  --danger-500: #ef4444;
+}
+
+/* Body and base */
+html, body {
+  background-color: var(--bg);
+  color: var(--text);
+}
+
+/* Cards */
+.card {
+  background-color: var(--bg-elev) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+.card .text-muted { color: var(--muted) !important; }
+
+/* Alerts */
+.alert-light, .alert-secondary {
+  background-color: var(--bg-soft) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border) !important;
+}
+
+/* Buttons */
+.btn-outline-secondary {
+  color: var(--muted) !important;
+  border-color: var(--border) !important;
+}
+.btn-outline-secondary:hover {
+  background-color: var(--bg-soft) !important;
+  color: var(--text) !important;
+  border-color: var(--border) !important;
+}
+.btn-primary {
+  background-color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+.btn-primary:hover {
+  background-color: var(--primary-700) !important;
+  border-color: var(--primary-700) !important;
+}
+.btn-outline-primary {
+  color: var(--primary) !important;
+  border-color: var(--primary) !important;
+}
+.btn-outline-primary:hover {
+  background-color: var(--primary) !important;
+  color: #fff !important;
+}
+
+/* Badges */
+.badge.bg-secondary {
+  background-color: var(--bg-soft) !important;
+  color: var(--text) !important;
+  border: 1px solid var(--border);
+}
+
+/* Sudoku board theming (only dark theme styles) */
+.sudoku-board {
+  border: 2px solid var(--grid-line);
+  background: var(--grid-line);
+}
+
+.sudoku-cell {
+  background: var(--cell-bg);
+  color: var(--text);
+  border: 1px solid #253140;
+}
+
+.sudoku-cell.prefilled {
+  background: var(--cell-prefilled);
+  color: #c4d0df;
+  font-weight: 700;
+}
+
+.sudoku-cell.related { background: var(--cell-related); }
+
+.sudoku-cell.selected {
+  background: var(--cell-selected);
+  outline: 2px solid var(--primary);
+  outline-offset: -2px;
+}
+
+.sudoku-cell.box-right { border-right: 2px solid var(--grid-line); }
+.sudoku-cell.box-bottom { border-bottom: 2px solid var(--grid-line); }
+
+/* Number pad theme */
+.number-pad { max-width: 420px; }
+.number-pad .btn { background: transparent; }
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* Scrollbar */
+*::-webkit-scrollbar { width: 10px; height: 10px; }
+*::-webkit-scrollbar-thumb { background: var(--grid-line); border-radius: 8px; }
+*::-webkit-scrollbar-track { background: var(--bg); }
+
+/* Pause state */
+.paused-wrap {
+  filter: blur(4px);
+  pointer-events: none;
+}
+
+.paused-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0,0,0,0.35);
+  backdrop-filter: blur(2px);
+  z-index: 2;
+  border-radius: 0.375rem;
+  pointer-events: auto;  /* clickable to resume */
+  cursor: pointer;
+}

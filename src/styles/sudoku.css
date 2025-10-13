@@ -1,0 +1,39 @@
+.sudoku-board {
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1 / 1;  /* Square board */
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  grid-template-rows: repeat(9, 1fr);
+  margin: 0 auto;
+}
+
+.sudoku-cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+  font-size: 1.25rem;
+  font-weight: 500;
+  cursor: pointer;
+  position: relative;
+}
+
+
+/* Num pad layout */
+.number-pad {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 0.5rem;
+  max-width: 420px;
+  width: 100%;
+  margin: 0.75rem auto 0;
+  justify-content: center;
+}
+
+@media (max-width: 480px) {
+  .number-pad {
+    grid-template-columns: repeat(5, 1fr);
+    max-width: 360px;
+  }
+}
