@@ -1,27 +1,31 @@
 import { Modal, Button } from "react-bootstrap";
+import { CheckCircleFill, XCircleFill } from "react-bootstrap-icons";
 
 const ResultModal = ({ show, title, body, onClose, onNew, variant = "success" }) => {
-  const iconClass =
-    variant === "success" ? "bi-check-circle-fill text-success" : "bi-x-circle-fill text-danger";
-
   return (
     <Modal show={show} onHide={onClose} centered>
       <Modal.Header closeButton>
         <Modal.Title className="d-flex align-items-center gap-2">
-          <i className={`bi ${iconClass} fs-3`} aria-hidden="true" />
+          {variant === "success" ? (
+            <CheckCircleFill className="text-success fs-3"/>
+          ): (
+            <XCircleFill className="text-danger fs-3"/>
+          )}
           <span>{title}</span>
         </Modal.Title>
       </Modal.Header>
-      <Modal.Body>{body}</Modal.Body>
-      <Modal.Footer>
+      <Modal.Body>
+        <div>{body}</div>
         {onNew && (
-          <Button variant="primary" onClick={onNew}>
-            New Puzzle
-          </Button>
+          <div className="mt-3 text-center">
+            <Button variant="primary" onClick={onNew}>
+              New Puzzle
+            </Button>
+          </div>
         )}
-      </Modal.Footer>
+      </Modal.Body>
     </Modal>
   );
-}
+};
 
 export default ResultModal;

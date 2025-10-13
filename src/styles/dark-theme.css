@@ -102,6 +102,30 @@ html, body {
 .sudoku-cell.box-right { border-right: 2px solid var(--grid-line); }
 .sudoku-cell.box-bottom { border-bottom: 2px solid var(--grid-line); }
 
+/* Wrong number, shake and red tint */
+@keyframes sudoku-cell-shake {
+  0%   { transform: translateX(0); }
+  15%  { transform: translateX(-4px); }
+  30%  { transform: translateX(4px); }
+  45%  { transform: translateX(-3px); }
+  60%  { transform: translateX(3px); }
+  75%  { transform: translateX(-2px); }
+  90%  { transform: translateX(2px); }
+  100% { transform: translateX(0); }
+}
+
+.sudoku-cell.error {
+  background: rgba(239, 68, 68, 0.16) !important;
+  border-color: var(--danger-500) !important;
+  animation: sudoku-cell-shake 0.45s ease;
+}
+
+/* If wrong cell is also selected keep red outline */
+.sudoku-cell.error.selected {
+  outline: 2px solid var(--danger-500) !important;
+  outline-offset: -2px;
+}
+
 /* Number pad theme */
 .number-pad { max-width: 420px; }
 .number-pad .btn { background: transparent; }

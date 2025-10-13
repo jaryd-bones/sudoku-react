@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Container, Row, Col, Card, Button, Alert } from "react-bootstrap";
 import DifficultyPicker from "./components/DifficultyPicker.jsx";
 import HudBar from "./components/HudBar.jsx";
@@ -18,6 +18,8 @@ const App = () => {
   const [phase, setPhase] = useState("idle");  // idle | loading | playing
   const [difficulty, setDifficulty] = useState("medium");
   const [generating, setGenerating] = useState(false);
+  const [showWinModal, setShowWinModal] = useState(false);
+  const [showLoseModal, setShowLossModal] = useState(false);
 
   const timer = useTimer();
   const {
@@ -52,6 +54,8 @@ const App = () => {
       await Promise.resolve();  // Let UI paint
       const { puzzle: generatedPuzzle, solution: solvedGrid } = await generatePuzzle(difficulty);
       begin(generatedPuzzle, solvedGrid);
+      setShowWinModal(false);
+      setShowLossModal(false);
       setPaused(false);
       setPhase("playing");
     } finally {
@@ -62,10 +66,12 @@ const App = () => {
   const handleBackToDifficulty = () => {
     setPhase("idle");
     setPaused(false);
+    setShowWinModal(false);
+    setShowLossModal(false);
     resetToDifficulty();
   };
 
-  // Keyboard controls (only active when playing, not paused, and not game over)
+  // Keyboard controls, not active when game over or paused
   useKeyboardControls({
     enabled: started && !gameOver && !paused,
     onMove: moveSelection,
@@ -81,6 +87,15 @@ const App = () => {
     gameOver && current && solution && JSON.stringify(current) === JSON.stringify(solution);
   const isLoss =
     gameOver && !!puzzle && !!solution && JSON.stringify(current) !== JSON.stringify(solution);
+
+  // Open the appropriate modal when the game ends
+  useEffect(() => {
+    if (!gameOver) return;
+    const didWin =
+      current && solution && JSON.stringify(current) === JSON.stringify(solution);
+    setShowWinModal(didWin);
+    setShowLossModal(!didWin);
+  }, [gameOver, current, solution]);
 
   return (
     <Container className={containerClass}>
@@ -120,12 +135,15 @@ const App = () => {
               </div>
 
               {phase === "idle" && (
-                <DifficultyPicker
-                  difficulty={difficulty}
-                  onChange={setDifficulty}
-                  onGenerate={handleGenerate}
-                  generating={generating}
-                />
+                <>
+                  <p className="text-muted"> Choose a difficulty and press play to generate a random puzzle. </p>
+                  <DifficultyPicker
+                    difficulty={difficulty}
+                    onChange={setDifficulty}
+                    onGenerate={handleGenerate}
+                    generating={generating}
+                  />
+                </>
               )}
 
               {phase === "loading" && <LoadingPanel />}
@@ -201,18 +219,18 @@ const App = () => {
 
       {/* Modals */}
       <ResultModal
-        show={isWin}
+        show={showWinModal}
         title="Puzzle Solved"
         body={`Nice work! Time: ${timer.formatTime()}`}
-        onClose={() => {}}
+        onClose={() => setShowWinModal(false)}
         onNew={handleBackToDifficulty}
         variant="success"
       />
       <ResultModal
-        show={isLoss}
+        show={showLoseModal}
         title="Three Mistakes"
         body="You'll get it next time. Try generating a new puzzle."
-        onClose={() => {}}
+        onClose={() => setShowLossModal(false)}
         onNew={handleBackToDifficulty}
         variant="danger"
       />
