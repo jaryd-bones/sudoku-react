@@ -99,7 +99,7 @@ const App = () => {
 
   return (
     <Container className={containerClass}>
-      <Row className="justify-content-center w-100">
+      <Row className="justify-content-center w-100 mx-0">
         <Col xs={12} md={10} lg={8} xl={6}>
           <Card className="shadow-sm">
             <Card.Body>
