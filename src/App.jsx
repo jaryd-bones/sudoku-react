@@ -136,7 +136,6 @@ const App = () => {
 
               {phase === "idle" && (
                 <>
-                  <p className="text-muted"> Choose a difficulty and press play to generate a random puzzle. </p>
                   <DifficultyPicker
                     difficulty={difficulty}
                     onChange={setDifficulty}
