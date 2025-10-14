@@ -47,21 +47,22 @@ const App = () => {
   });
 
   // Generate and start
-  const handleGenerate = async () => {
-    setGenerating(true);
-    setPhase("loading");
-    try {
-      await Promise.resolve();  // Let UI paint
-      const { puzzle: generatedPuzzle, solution: solvedGrid } = await generatePuzzle(difficulty);
-      begin(generatedPuzzle, solvedGrid);
-      setShowWinModal(false);
-      setShowLossModal(false);
-      setPaused(false);
-      setPhase("playing");
-    } finally {
-      setGenerating(false);
-    }
-  };
+const handleGenerate = async () => {
+  setGenerating(true);
+  setPhase("loading");
+  try {
+    // Let loading UI render before puzzle generates
+    await new Promise(requestAnimationFrame);
+    const { puzzle: generatedPuzzle, solution: solvedGrid } = generatePuzzle(difficulty);
+    begin(generatedPuzzle, solvedGrid);
+    setShowWinModal(false);
+    setShowLossModal(false);
+    setPaused(false);
+    setPhase("playing");
+  } finally {
+    setGenerating(false);
+  }
+};
 
   const handleBackToDifficulty = () => {
     setPhase("idle");
