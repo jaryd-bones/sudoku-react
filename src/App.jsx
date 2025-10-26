@@ -47,22 +47,22 @@ const App = () => {
   });
 
   // Generate and start
-const handleGenerate = async () => {
-  setGenerating(true);
-  setPhase("loading");
-  try {
-    // Let loading UI render before puzzle generates
-    await new Promise(requestAnimationFrame);
-    const { puzzle: generatedPuzzle, solution: solvedGrid } = generatePuzzle(difficulty);
-    begin(generatedPuzzle, solvedGrid);
-    setShowWinModal(false);
-    setShowLossModal(false);
-    setPaused(false);
-    setPhase("playing");
-  } finally {
-    setGenerating(false);
-  }
-};
+  const handleGenerate = async () => {
+    setGenerating(true);
+    setPhase("loading");
+    try {
+      // Let loading UI render before puzzle generates
+      await new Promise(requestAnimationFrame);
+      const { puzzle: generatedPuzzle, solution: solvedGrid } = generatePuzzle(difficulty);
+      begin(generatedPuzzle, solvedGrid);
+      setShowWinModal(false);
+      setShowLossModal(false);
+      setPaused(false);
+      setPhase("playing");
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const handleBackToDifficulty = () => {
     setPhase("idle");
@@ -72,24 +72,19 @@ const handleGenerate = async () => {
     resetToDifficulty();
   };
 
-  // Keyboard controls, not active when game over or paused
+  // Disable keyboard controls
   useKeyboardControls({
     enabled: started && !gameOver && !paused,
     onMove: moveSelection,
     onPlace: placeNumber,
   });
 
-  const containerClass =
-    phase === "idle" || phase === "loading"
-      ? "min-vh-100 d-flex align-items-center justify-content-center py-4"
-      : "py-4";
-
   const isWin =
     gameOver && current && solution && JSON.stringify(current) === JSON.stringify(solution);
   const isLoss =
     gameOver && !!puzzle && !!solution && JSON.stringify(current) !== JSON.stringify(solution);
 
-  // Open the appropriate modal when the game ends
+  // Game over modal
   useEffect(() => {
     if (!gameOver) return;
     const didWin =
@@ -99,7 +94,7 @@ const handleGenerate = async () => {
   }, [gameOver, current, solution]);
 
   return (
-    <Container className={containerClass}>
+    <Container className="min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
       <Row className="justify-content-center w-100 mx-0">
         <Col xs={12} md={10} lg={8} xl={6}>
           <Card className="shadow-sm">
