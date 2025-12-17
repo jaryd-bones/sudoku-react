@@ -1,5 +1,7 @@
 # Sudoku (React)
 
+![Sudoku demo](assets/demo.png)
+
 A fast, client side Sudoku built with React and Vite. Generates puzzles (easy/medium/hard) via backtracking, enforces unique solutions, tracks time, and counts mistakes.
 
 ## Features
