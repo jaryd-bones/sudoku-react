@@ -32,7 +32,7 @@ const computeTargetPrefilled = (difficulty) =>
 // Convert 0-80 to [row, col]
 const indexToRowCol = (index) => [(index / BOARD_SIZE) | 0, index % BOARD_SIZE];
 
-// Mirror of (row, col) for 180 degree rotational symmetry
+// Mirror of (row, col)
 const getMirrorCell = (row, col) => [LAST_IDX - row, LAST_IDX - col];
 
 const hasUniqueSolution = (puzzle) => {

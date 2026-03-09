@@ -4,6 +4,8 @@
 
 A fast, client side Sudoku built with React and Vite. Generates puzzles (easy/medium/hard) via backtracking, enforces unique solutions, tracks time, and counts mistakes.
 
+**Live Demo:** https://sudoku-react-dsps.onrender.com/
+
 ## Features
 - Difficulty: Easy / Medium / Hard (controls number of prefilled tiles)
 - Start screen + timer
